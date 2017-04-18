@@ -42,7 +42,6 @@ class Mobile(object):
                     client.updateThread(thread)
                 else:
                     print 'Client %s has disconnected. Error: connection overload. Maximum clients reached.' %(client.getAddr())
-                    client.sendto('max') # CHECK THIS
                     client.close()
             except socket.error as msg:
                 if msg[0] in [10053,10054,9]:  # if socket error raised
@@ -71,9 +70,8 @@ class Mobile(object):
                 _input = client.recvfrom(1024)
                 if _input == None:
                     raise socket.error(9)
-                request = Message.Message(_input, client.getClearance(), 5)
+                request = Message.Message(_input)
                 client.addRequest(request)
-
             except socket.error as msg:
                 if msg[0] in [10053,10054,9]:  # if socket error raised
                     print 'Client %s has disconnected.' %(client.getAddr())

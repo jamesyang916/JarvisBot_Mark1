@@ -6,7 +6,6 @@ class Client(object):
     def __init__(self, conn, addr):
         self.conn = conn
         self.addr = addr
-        self.clearance = -1
         self.thread = None
         self.requests = PriorityQueue(10)
         self.alive = True
@@ -18,10 +17,6 @@ class Client(object):
         return res
     def close(self):
         self.conn.close()
-    def updateClearance(self, clearance):
-        self.clearance = clearance
-    def getClearance(self):
-        return self.clearance
     def updateThread(self, thread):
         self.thread = thread
     def getThread(self):
@@ -30,11 +25,10 @@ class Client(object):
         return self.addr
     def addRequest(self, request):
         if not self.requests.full():
-            self.requests.put((request.getPriority(), 
-                            request))     
+            self.requests.put(request)     
     def getRequest(self):
         if not self.empty():
-            return self.requests.get()[1]
+            return self.requests.get()
         return None
     def empty(self):
         return self.requests.empty()
