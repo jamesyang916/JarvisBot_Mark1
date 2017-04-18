@@ -1,6 +1,7 @@
 # Input Interpreter
 import string
-
+from datetime import date
+import calendar
 class Interpret(object):
     # Wikipedia
     # Wolfram Q35XX4-9AG2KK3Q9L
@@ -23,8 +24,6 @@ class Interpret(object):
     def sir(self):
         return "Yes?"
     def day(self):
-        from datetime import date
-        import calendar
         my_date = date.today()
         return calendar.day_name[my_date.weekday()]
     def greet(self):
