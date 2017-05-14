@@ -12,8 +12,10 @@ class Mobile(object):
         self.clientthrlst = []
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.sock.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,1)
+        IP = ''
+        PORT = 5002
         try:
-            self.sock.bind(('',5001))
+            self.sock.bind((IP, PORT))
             self.sock.listen(10)
             self.Thread1 = threading.Thread(target=self.addClients)
         except socket.error as msg:

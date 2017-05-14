@@ -2,6 +2,7 @@
 import socket
 import threading
 import time
+import webbrowser
 
 class Jarvis_Connect(object):
     def __init__(self):
@@ -56,7 +57,10 @@ class Jarvis_Connect(object):
         while (not self._input_stop.is_set()):
             try:
                 res = self.sock.recv(1024)    
-                print res
+                if 'http' in res:
+                    webbrowser.open(res)
+                else:
+                    print res
             except socket.timeout:
                 pass                       
             except socket.error, e:
@@ -71,8 +75,10 @@ if __name__ == '__main__':
     #James iMac
     #IP = '100.8.233.176'
     #Columbia
-    IP = '160.39.141.17'
-    PORT = 5001
+    #IP = '160.39.140.121'
+    #Virtual Machine
+    IP = '40.71.102.0'
+    PORT = 5002
     oJarv = Jarvis_Connect()
     try:
         success = oJarv.connect(IP, PORT)
