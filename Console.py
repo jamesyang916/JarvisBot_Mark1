@@ -1,7 +1,6 @@
 import threading
 import Message
 import Queue
-import webbrowser
 
 class Console(object):
     def __init__(self, oInterpret):
@@ -33,10 +32,7 @@ class Console(object):
                 # res = self.oInterpret.test(request, 'console')
                 if res == None:
                     continue
-                elif 'http' in res:
-                    webbrowser.open(res)
-                else:  
-                    print res
+                print res
         
 
 
