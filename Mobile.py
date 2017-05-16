@@ -17,6 +17,9 @@ class Mobile(object):
         try:
             self.sock.bind((IP, PORT))
             self.sock.listen(10)
+
+            self.run_event = threading.Event()
+            self.run_event.set()
             self.Thread1 = threading.Thread(target=self.addClients)
         except socket.error as msg:
             print msg
@@ -27,11 +30,18 @@ class Mobile(object):
      
     def mobile(self):
         self.Thread1.start()
-        self.Thread1.join()
+        try:
+            while 1:
+                time.sleep(2)
+        except KeyboardInterrupt:
+            print "KeyboardInterrupt Exception. Shutting down Jarvis."
+            self.run_event.clear()
+            self.Thread1.join()
+            print "Main thread successfully closed."
         
     # Thread 1
     def addClients(self):
-        while 1:
+        while self.run_event.is_set():
             try:
                 conn, addr = self.sock.accept()            
                 client = Client.Client(conn, addr[0])
@@ -49,6 +59,7 @@ class Mobile(object):
                 if msg[0] in [10053,10054,9]:  # if socket error raised
                     print 'Client %s has disconnected.' %(client.getAddr())
                 client.close()
+            time.sleep(1)
                          
 
     def delClient(self, client):

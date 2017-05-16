@@ -25,6 +25,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Client.py" />
+    <Compile Include="Console.py" />
     <Compile Include="Interpret.py" />
     <Compile Include="Jarvis_6.py" />
     <Compile Include="Jarvis_Connect.py" />
